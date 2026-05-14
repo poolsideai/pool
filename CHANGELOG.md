@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.2] - 2026-05-14
+
+- Show common shortcuts on startup
+- New status line UI, show context usage
+- Allow to use `pool` without login with other ACP servers or Ollama
+- Markdown rendering fixes
+- Show edit and write previews before asking for permissions
+- `pool acp`: More detailed `/usage` slash command output
+- `pool acp`: Fix `session/load` race condition
+- `pool acp`: Implement ACP `session/close`
+
 ## [1.0.1] - 2026-05-04
 
 - Allow more characters in paths stored in settings.yaml
