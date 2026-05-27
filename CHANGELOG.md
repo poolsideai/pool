@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.3] - 2026-05-27
+
+- Show git branch in the status line
+- Show "Accept edits for this session" option in the permission dialog
+- Support image pasting with Ctrl+V
+- Expose skills as ACP slash commands
+- Add `/compact` command, it can optionally take a guidance argument, e.g. `/compact preserve tool call errors`
+- Better display for ANSI sequences in shell tool output
+- Faster initial rendering for resumed sessions
+- In `pool --resume`, see sessions from all directories with <Tab>
+
 ## [1.0.2] - 2026-05-14
 
 - Show common shortcuts on startup
