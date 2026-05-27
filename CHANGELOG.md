@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.4] - 2026-05-27
+
+- Fix scrolling for slash commands
+
 ## [1.0.3] - 2026-05-27
 
 - Show git branch in the status line
