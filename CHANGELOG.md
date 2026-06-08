@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.0.5] - 2026-06-08
+
+- Notifications for turn end, permissions and elicitations, only emitted when `pool` is not focused
+- Support for [cmux](https://cmux.com): notifications and status icons
+- Rename session with the `/rename` command, find session again with `pool -r`
+- See connected MCP servers with `/mcp` command
+- Launch interactive ACP agent server picker with `pool -s`
+- Added a built-in introspection skill: ask `pool` about itself
+- Better text selection
+- Moved `pool acp --reasoning` to session config options
+- Fixed text pasting on Terminal.app
+- Removed 30 second timeout for MCP tools
+
 ## [1.0.4] - 2026-05-27
 
 - Fix scrolling for slash commands
