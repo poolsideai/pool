@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.0.6] - 2026-06-19
+
+### ACP agent (`pool acp`)
+
+- OpenRouter support. Select `Log in with OpenRouter` during `pool login` to get started.
+- Show session cost in `/usage`.
+- Support [`session/delete`](https://agentclientprotocol.com/rfds/session-delete).
+- Support [`message IDs`](https://agentclientprotocol.com/rfds/message-id).
+
+### ACP client (TUI)
+
+- Clickable mode and model in the status bar, show help tooltips on hover.
+- Worktree support. Use `--worktree` to run in a new git worktree at launch. Use `/move` slash command to move current session (and optionally files) to a git worktree.
+- Use `ctrl+g` shortcut to open prompt in the editor. Message group toggling is moved to `ctrl+t`.
+- Use native terminal cursor, also displays focus state.
+
 ## [1.0.5] - 2026-06-08
 
 - Notifications for turn end, permissions and elicitations, only emitted when `pool` is not focused
