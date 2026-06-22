@@ -20,6 +20,9 @@ pool is [Poolside](https://poolside.ai)’s coding agent. It can run in several 
 - [Run as an ACP server (`pool acp`)](#run-as-an-acp-server-pool-acp)
 - [Run as an ACP client (`pool --agent-server`)](#run-as-an-acp-client-pool---agent-server)
 - [Run non-interactively (`pool exec`)](#run-non-interactively-pool-exec)
+- [OpenRouter](#openrouter)
+- [Ollama](#ollama)
+- [OpenAI-compatible API](#openai-compatible-api)
 - [MCP servers](#mcp-servers)
 - [Configuration](#configuration)
 - [Permissions](#permissions)
@@ -189,6 +192,37 @@ pool exec -p "scan cmd/cli code for vulnerabilities" -o json --unsafe-auto-allow
 
 # Prompt from a file
 pool exec -f prompt.txt -o json
+```
+
+## OpenRouter
+
+[OpenRouter](https://openrouter.ai) is supported natively in `pool`.
+
+Run `pool login` and select `Log in with OpenRouter`.
+
+## Ollama
+
+[Ollama](https://ollama.com) supports `pool` natively:
+
+```bash
+# Launch model selector
+ollama launch pool
+
+# Launch directly with a model
+ollama launch pool --model laguna-xs.2
+```
+
+## OpenAI-compatible API
+
+You can run `pool` against any OpenAI-compatible API. For example, for using local models with [`llama.cpp`](https://llama.app) or locally running [vLLM](https://vllm.ai).
+
+```bash
+POOLSIDE_STANDALONE_BASE_URL="http://127.0.0.1:8080" POOLSIDE_API_KEY="EMPTY" pool
+```
+
+In some environments you need to pass the model too:
+```bash
+POOLSIDE_STANDALONE_BASE_URL="http://127.0.0.1:8080" POOLSIDE_API_KEY="EMPTY" POOLSIDE_STANDALONE_MODEL="ggml-org/gemma-3-1b-it-GGUF" pool
 ```
 
 ## MCP servers
