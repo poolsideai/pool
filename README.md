@@ -119,12 +119,8 @@ npm install -g @agentclientprotocol/claude-agent-acp
 pool --agent-server claude-agent-acp
 
 # Codex
-npm install -g @zed-industries/codex-acp
+npm install -g @agentclientprotocol/codex-acp
 pool --agent-server codex-acp
-
-# Gemini
-npm install -g @google/gemini-cli
-pool --agent-server "gemini --acp"
 ```
 
 To set a non-Poolside server as the default, edit `~/.config/poolside/pool.json`:
@@ -142,7 +138,7 @@ To set a non-Poolside server as the default, edit `~/.config/poolside/pool.json`
 Flags after `--` are forwarded to the ACP server `pool` is running. For example:
 
 ```bash
-pool -- --reasoning high
+pool -- --sandbox required
 ```
 
 ## Run non-interactively (`pool exec`)
