@@ -9,7 +9,7 @@ pool is [Poolside](https://poolside.ai)’s coding agent. It can run in several 
 
 | Ghostty | Terminal.app |
 | --- | --- |
-| <img src="https://github.com/user-attachments/assets/7c5befea-2e12-4aa1-809e-e9f25b057362" /> | <img src="https://github.com/user-attachments/assets/d2088fa4-bf1b-438b-aec5-57dbb6716c0b" /> |
+| <img src="https://github.com/user-attachments/assets/7bff40ed-f347-4fcb-924f-85f4fd08ed82" /> | <img src="https://github.com/user-attachments/assets/2e91f838-501b-4449-b8d9-5779137cece0" /> |
 
 ## Contents
 
