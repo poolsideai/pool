@@ -85,46 +85,9 @@ pool implements and integrates with open agent specs:
 
 ## Run as an ACP server (`pool acp`)
 
-`pool acp` is an [Agent Client Protocol](https://agentclientprotocol.com) server. Use it from any ACP-compatible client.
+`pool acp` is an [Agent Client Protocol](https://agentclientprotocol.com) server. Use it from any ACP-compatible client, like [Zed](https://zed.dev/acp), [JetBrains](https://www.jetbrains.com/acp/), [Xcode](https://developer.apple.com/documentation/Xcode/setting-up-coding-intelligence), and [others](https://agentclientprotocol.com/get-started/clients).
 
-### Zed
-
-```bash
-pool acp setup --editor zed
-```
-
-This writes Poolside agent configuration to `~/.config/zed/settings.json`. Or add it manually:
-
-```json
-{
-  "agent_servers": {
-    "Poolside": {
-      "command": "pool",
-      "args": ["acp"],
-      "type": "custom"
-    }
-  }
-}
-```
-
-### JetBrains
-
-```bash
-pool acp setup --editor jetbrains
-```
-
-This writes configuration to `~/.jetbrains/acp.json`. Or add it manually:
-
-```json
-{
-  "agent_servers": {
-    "Poolside": {
-      "command": "pool",
-      "args": ["acp"]
-    }
-  }
-}
-```
+Install it from the [ACP registry](https://agentclientprotocol.com/get-started/registry).
 
 ### Other editors
 
@@ -137,7 +100,7 @@ Point the editor's ACP configuration at `pool acp`:
 }
 ```
 
-To pass flags to the ACP server, add them to the args array, for example `["acp", "--reasoning", "high"]`.
+To pass flags to the ACP server, add them to the args array, for example `["acp", "--sandbox", "required"]`.
 
 ### ACP features
 
