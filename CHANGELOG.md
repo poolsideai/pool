@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.0.7] - 2026-06-26
+
+### ACP agent (`pool acp`)
+
+- Load `AGENTS.md` files from directories above working directory.
+- Use global `AGENTS.md` instead of `.poolside`.
+- Compaction fixes.
+- Improved skill tool display.
+
+### ACP client (TUI)
+
+- Add `/logs` command to get debug logs.
+- Show hint about `/logs` and `/feedback` on error.
+- Ask about default setting when switching model or mode.
+- Truncate queued prompts in the UI.
+- Do not reset prompt input when mode selector is opened.
+- Reuse current model when starting a new session with `/new`.
+
 ## [1.0.6] - 2026-06-19
 
 ### ACP agent (`pool acp`)
