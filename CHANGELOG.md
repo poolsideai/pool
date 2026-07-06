@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.0.8] - 2026-07-06
+
+### ACP agent
+
+- Pass additional settings (file or content) with `--settings`.
+- New `/system` slash command to see the system prompt.
+- Skill errors are shown in `/skills`.
+- Settings from `pool.json` are moved into `settings.yaml`.
+- Fixed memory leaks on long trajectories.
+- Removed default limit on maximum steps.
+- Fixed reasoning parsing.
+- Fixed mode updates.
+- Compaction improvements.
+
+### ACP client (TUI)
+
+- Allow to configure worktree prefix (`settings.yaml > pool > worktree_prefix`).
+- New spinner.
+
 ## [1.0.7] - 2026-06-26
 
 ### ACP agent (`pool acp`)
