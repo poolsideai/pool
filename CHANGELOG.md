@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.9] - 2026-07-08
+
+- Internal changes.
+
 ## [1.0.8] - 2026-07-06
 
 ### ACP agent
