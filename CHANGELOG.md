@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.10] - 2026-07-08
+
+- Stability fixes for long sessions.
+
 ## [1.0.9] - 2026-07-08
 
 - Internal changes.
