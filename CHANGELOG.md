@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.0.11] - 2026-07-09
+
+### ACP agent
+
+- Improved timeout handling for long streaming requests.
+- Skills are now also discovered from `~/.agents/skills`.
+
+### ACP client (TUI)
+
+- New `/resume` slash command (same as `--resume` but from inside TUI).
+- Skills are now accessed via `$` instead of `/`.
+- Added mouse support for `/model` and `/mode` selectors.
+- New `/set-option` command to set custom session config options on the ACP agent.
+- Improved double-click mouse selection.
+- Removed message for mode cycling (shift+tab).
+- Experimental: network transport (streaming HTTP) support.
+
 ## [1.0.10] - 2026-07-08
 
 - Stability fixes for long sessions.
