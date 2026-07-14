@@ -139,7 +139,7 @@ Flags after `--` are forwarded to the ACP server `pool` is running. For example:
 pool -- --sandbox required
 ```
 
-You can also use configure remote ACP agents:
+You can also use configure remote ACP agents that work through [streamable HTTP transport](https://agentclientprotocol.com/rfds/streamable-http-websocket-transport):
 
 ```yaml
 # settings.yaml
