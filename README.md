@@ -105,7 +105,7 @@ To pass flags to the ACP server, add them to the args array, for example `["acp"
 ### ACP features
 
 - Session persistence: `session/list` and `session/load`
-- Session config options: mode and model. These can be persisted in `pool.json`
+- Session config options: mode and model. These can be persisted in `settings.yaml`
   and are sent on startup using `session/set_config_option`
 - Slash commands advertised to the client
 
@@ -123,16 +123,14 @@ npm install -g @agentclientprotocol/codex-acp
 pool --agent-server codex-acp
 ```
 
-To set a non-Poolside server as the default, edit `~/.config/poolside/pool.json`:
+To set other ACP agent as a default, change `pool.default_agent_server` key:
 
-```json
-{
-  "agent_servers": {
-    "default": {
-      "command": "claude-agent-acp"
-    }
-  }
-}
+```yaml
+pool:
+  default_agent_server: claude
+agent_servers:
+  claude:
+    command: claude-agent-acp
 ```
 
 Flags after `--` are forwarded to the ACP server `pool` is running. For example:
@@ -140,6 +138,19 @@ Flags after `--` are forwarded to the ACP server `pool` is running. For example:
 ```bash
 pool -- --sandbox required
 ```
+
+You can also use configure remote ACP agents:
+
+```yaml
+# settings.yaml
+agent_servers:
+  remote:
+    url: https://my-vm.exe.xyz/acp
+    headers:
+      X-Secret-Key: my-secret
+```
+
+And connect with `pool -s remote`.
 
 ## Run non-interactively (`pool exec`)
 
@@ -214,7 +225,7 @@ Servers are stored under `mcp_servers` in `~/.config/poolside/settings.yaml`. Yo
 
 Run `pool config` to print the log, trajectory, and configuration directories, as well as the credentials file path. Run `pool config settings` to open `settings.yaml` in your editor.
 
-By default, Poolside stores configuration files in `~/.config/poolside`. This includes `settings.yaml` (CLI settings), `credentials.json` (API token), and `pool.json` (agent server defaults).
+By default, Poolside stores configuration files in `~/.config/poolside`. This includes `settings.yaml` (CLI settings), `credentials.json` (API token).
 
 For automation environments, set `POOLSIDE_API_KEY` instead of using stored credentials. `pool` checks it before reading from configuration files.
 
