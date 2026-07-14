@@ -229,6 +229,52 @@ By default, Poolside stores configuration files in `~/.config/poolside`. This in
 
 For automation environments, set `POOLSIDE_API_KEY` instead of using stored credentials. `pool` checks it before reading from configuration files.
 
+### settings.yaml reference
+
+All settings can be set globally (`~/.config/poolside/settings.yaml`) or
+per-project (`.poolside/settings.yaml`, or gitignored
+`.poolside/settings.local.yaml`). The most specific file wins.
+
+Besides [agent servers](#run-as-an-acp-client-pool---agent-server),
+[MCP servers](#mcp-servers), and [permissions](#permissions), `settings.yaml`
+supports:
+
+**TUI defaults**:
+
+```yaml
+pool:
+  default_agent_server: my-acp-agent # agent used when --agent-server is omitted
+  worktree_prefix: alice-            # prefix for auto-generated --worktree names
+```
+
+**System prompt override**:
+
+```yaml
+prompts:
+  system_message: |
+    You are a security-focused code reviewer. Flag unsafe patterns
+    and never suggest disabling TLS verification.
+```
+
+This fully replaces the built-in system prompt. To add instructions on top of the default prompt, use global [AGENTS.md](https://agents.md) file instead.
+
+**Web search**:
+
+```yaml
+web_search:
+  provider: exa             # "exa" or "parallel"
+  api_key: your-api-key
+  summarize_results: true   # summarize fetched pages with the session model
+```
+
+**Disabling a tool**:
+
+```yaml
+tools:
+  web_fetch:
+    disabled: true
+```
+
 ## Permissions
 
 Permission rules can be set at three scopes:
