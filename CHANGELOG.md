@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.13] - 2026-07-20
+
+### ACP agent
+
+- Reduced network requests for `session/new`.
+- Added image support to the read tool.
+
+### ACP client (TUI)
+
+- Added effort level selector.
+- Switched logs to JSON.
+
 ## [1.0.12] - 2026-07-15
 
 ### ACP client (TUI)
