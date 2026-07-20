@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.12] - 2026-07-15
+
+### ACP client (TUI)
+
+- Show token counter on active thoughts.
+- When pool is started with `--workspace`, change current terminal directory to the workspace directory.
+- Fix sticky scroll with an active text selection.
+- Improve rendering for long commands that start with `cd`.
+- Performance improvements.
+
 ## [1.0.11] - 2026-07-09
 
 ### ACP agent
