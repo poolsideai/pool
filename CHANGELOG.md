@@ -17,7 +17,7 @@
 ### ACP client (TUI)
 
 - Show token counter on active thoughts.
-- When pool is started with `--workspace`, change current terminal directory to the workspace directory.
+- When pool is started with `--worktree`, change current terminal directory to the worktree directory.
 - Fix sticky scroll with an active text selection.
 - Improve rendering for long commands that start with `cd`.
 - Performance improvements.
