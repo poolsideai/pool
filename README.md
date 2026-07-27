@@ -164,6 +164,18 @@ pool exec -p "scan cmd/cli code for vulnerabilities" -o json --unsafe-auto-allow
 pool exec -f prompt.txt -o json
 ```
 
+### Connect to Poolside Platform from CI
+
+In CI or another headless environment without credentials saved by `pool login`, set your Poolside Platform API key and endpoint before you run `pool exec`:
+
+```bash
+POOLSIDE_API_KEY="<api-key>" \
+  POOLSIDE_STANDALONE_BASE_URL="https://inference.poolside.ai" \
+  pool exec -p "<prompt>" -o json --unsafe-auto-allow
+```
+
+To choose a model instead of using the default, also set `POOLSIDE_STANDALONE_MODEL` to its model ID.
+
 ## OpenRouter
 
 [OpenRouter](https://openrouter.ai) is supported natively in `pool`.
@@ -227,7 +239,7 @@ Run `pool config` to print the log, trajectory, and configuration directories, a
 
 By default, Poolside stores configuration files in `~/.config/poolside`. This includes `settings.yaml` (CLI settings), `credentials.json` (API token).
 
-For automation environments, set `POOLSIDE_API_KEY` instead of using stored credentials. `pool` checks it before reading from configuration files.
+For automation environments without credentials saved by `pool login`, set `POOLSIDE_API_KEY` and the provider endpoint. See [Connect to Poolside Platform from CI](#connect-to-poolside-platform-from-ci).
 
 ### settings.yaml reference
 
