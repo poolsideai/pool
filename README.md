@@ -69,7 +69,7 @@ By default, pool asks for approval before each tool call. Switch to Accept edits
 | ------------- | -------------- | ------------------------------------------------------------------ |
 | Always ask    | `default`      | Prompts for approval on first use of each tool type                |
 | Accept edits  | `accept-edits` | Auto-approves workspace file reads and writes                      |
-| Allow all     | `allow-all`    | Approves tool calls automatically                                  |
+| Allow all     | `always-allow` | Approves tool calls automatically                                  |
 | Plan          | `plan`         | Plans changes without modifying your codebase                      |
 
 Press `Shift+Tab` to cycle through modes, or use `/mode <id>` to switch directly.
@@ -105,7 +105,7 @@ To pass flags to the ACP server, add them to the args array, for example `["acp"
 ### ACP features
 
 - Session persistence: `session/list` and `session/load`
-- Session config options: mode and model. These can be persisted in `settings.yaml`
+- Session config options: mode, model, and thought level when supported. These can be persisted in `settings.yaml`
   and are sent on startup using `session/set_config_option`
 - Slash commands advertised to the client
 
@@ -164,11 +164,23 @@ pool exec -p "scan cmd/cli code for vulnerabilities" -o json --unsafe-auto-allow
 pool exec -f prompt.txt -o json
 ```
 
+Running `pool exec` non-interactively does not select standalone mode automatically. In CI or another headless environment without credentials saved by `pool login`, set the API key and base URL for your provider:
+
+```bash
+POOLSIDE_API_KEY="<api-key>" \
+  POOLSIDE_STANDALONE_BASE_URL="<provider-base-url>" \
+  pool exec -p "<prompt>" -o json --unsafe-auto-allow
+```
+
+For Poolside Platform, use `https://inference.poolside.ai` as the base URL.
+
+To choose a model instead of using the default, also set `POOLSIDE_STANDALONE_MODEL` to its model ID.
+
 ## OpenRouter
 
 [OpenRouter](https://openrouter.ai) is supported natively in `pool`.
 
-Run `pool login` and select `Log in with OpenRouter`.
+Run `pool login` and select `Use your OpenRouter account`.
 
 ## Ollama
 
@@ -227,7 +239,7 @@ Run `pool config` to print the log, trajectory, and configuration directories, a
 
 By default, Poolside stores configuration files in `~/.config/poolside`. This includes `settings.yaml` (CLI settings), `credentials.json` (API token).
 
-For automation environments, set `POOLSIDE_API_KEY` instead of using stored credentials. `pool` checks it before reading from configuration files.
+For automation environments without credentials saved by `pool login`, set `POOLSIDE_API_KEY` and the provider endpoint. See [Run non-interactively (`pool exec`)](#run-non-interactively-pool-exec).
 
 ### settings.yaml reference
 
