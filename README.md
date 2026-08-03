@@ -202,9 +202,17 @@ You can run `pool` against any OpenAI-compatible API. For example, for using loc
 POOLSIDE_STANDALONE_BASE_URL="http://127.0.0.1:8080" POOLSIDE_API_KEY="EMPTY" pool
 ```
 
-In some environments you need to pass the model too:
+Optional environment variables you can pass:
+
+- `POOLSIDE_STANDALONE_MODEL` to set the model
+- `POOLSIDE_STANDALONE_CONTEXT_LENGTH` to set the context length
+
 ```bash
-POOLSIDE_STANDALONE_BASE_URL="http://127.0.0.1:8080" POOLSIDE_API_KEY="EMPTY" POOLSIDE_STANDALONE_MODEL="ggml-org/gemma-3-1b-it-GGUF" pool
+POOLSIDE_STANDALONE_BASE_URL="http://127.0.0.1:8080" \
+POOLSIDE_API_KEY="EMPTY" \
+POOLSIDE_STANDALONE_MODEL="ggml-org/gemma-3-1b-it-GGUF" \
+POOLSIDE_STANDALONE_CONTEXT_LENGTH=200000 \
+pool
 ```
 
 ## MCP servers
