@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.0.15] - 2026-08-04
+
+### ACP agent
+
+- Added a separate selector to choose between build and plan modes. Mode selection is now independent of the permission selector.
+- Added support for encrypted reasoning tokens.
+- Improved sticky session support for OpenRouter.
+
+### ACP client (TUI)
+
+- Added cache usage information to the context tooltip. Hover over the context info in the status line to see it.
+- Added model descriptions to the model selector.
+- Added support for concurrent permission requests.
+- Added `/logout` command.
+- Improved rendering speed when resuming a session (`/resume` or `--resume`).
+- Improved rendering speed during markdown streaming.
+- Fixed click-to-expand for some tool calls.
+- Fixed unwanted horizontal scrolling.
+
+## [1.0.14] - 2026-07-31
+
+- Internal changes.
+
 ## [1.0.13] - 2026-07-20
 
 ### ACP agent
