@@ -64,11 +64,11 @@ Enter `?` or `/help` during a session to see all available commands and shortcut
 
 ## Approval modes
 
-By default, pool asks for approval before each tool call. Switch to Accept edits or Allow all when you want it to take actions without prompting.
+By default, pool asks for approval before tool actions that are not already allowed. Switch to Accept edits or Allow all when you want it to take actions without prompting.
 
 | Approval mode | ID             | What it does                                  |
 | ------------- | -------------- | --------------------------------------------- |
-| Always ask    | `default`      | Prompts for approval on first use of each tool type |
+| Always ask    | `default`      | Prompts for tool actions that are not already allowed |
 | Accept edits  | `accept-edits` | Auto-approves workspace file reads and writes |
 | Allow all     | `always-allow` | Approves tool calls automatically             |
 
@@ -111,7 +111,7 @@ To pass flags to the ACP server, add them to the args array, for example `["acp"
 ### ACP features
 
 - Session persistence: `session/list` and `session/load`
-- Session config options: mode, model, and thought level when supported. These can be persisted in `settings.yaml`
+- Session config options: approval mode, agent mode, model, and thought level when supported. These can be persisted in `settings.yaml`
   and are sent on startup using `session/set_config_option`
 - Slash commands advertised to the client
 
