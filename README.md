@@ -15,7 +15,8 @@ pool is [Poolside](https://poolside.ai)’s coding agent. It can run in several 
 
 - [Install](#install)
 - [Quick start](#quick-start)
-- [Modes](#modes)
+- [Approval modes](#approval-modes)
+- [Agent modes](#agent-modes)
 - [Spec support](#spec-support)
 - [Run as an ACP server (`pool acp`)](#run-as-an-acp-server-pool-acp)
 - [Run as an ACP client (`pool --agent-server`)](#run-as-an-acp-client-pool---agent-server)
@@ -61,18 +62,23 @@ Run `pool -h` to see all available options.
 
 Enter `?` or `/help` during a session to see all available commands and shortcuts.
 
-## Modes
+## Approval modes
 
 By default, pool asks for approval before each tool call. Switch to Accept edits or Allow all when you want it to take actions without prompting.
 
-| Mode          | ID             | What it does                                                       |
-| ------------- | -------------- | ------------------------------------------------------------------ |
-| Always ask    | `default`      | Prompts for approval on first use of each tool type                |
-| Accept edits  | `accept-edits` | Auto-approves workspace file reads and writes                      |
-| Allow all     | `always-allow` | Approves tool calls automatically                                  |
-| Plan          | `plan`         | Plans changes without modifying your codebase                      |
+| Approval mode | ID             | What it does                                  |
+| ------------- | -------------- | --------------------------------------------- |
+| Always ask    | `default`      | Prompts for approval on first use of each tool type |
+| Accept edits  | `accept-edits` | Auto-approves workspace file reads and writes |
+| Allow all     | `always-allow` | Approves tool calls automatically             |
 
-Press `Shift+Tab` to cycle through modes, or use `/mode <id>` to switch directly.
+Press `Shift+Tab` to cycle through approval modes, or use `/mode <approval-mode>` to switch directly.
+
+## Agent modes
+
+Build and Plan control how pool works without changing approval behavior. In Plan mode, pool can inspect your codebase and prepare a plan without modifying source files.
+
+After starting pool, use `/plan` or `/agent-mode plan` to enter Plan mode. Use `/agent-mode build` to return to Build mode. There is no Plan-mode startup flag.
 
 ## Spec support
 
@@ -205,7 +211,7 @@ POOLSIDE_STANDALONE_BASE_URL="http://127.0.0.1:8080" POOLSIDE_API_KEY="EMPTY" po
 Optional environment variables you can pass:
 
 - `POOLSIDE_STANDALONE_MODEL` to set the model
-- `POOLSIDE_STANDALONE_CONTEXT_LENGTH` to set the context length
+- `POOLSIDE_STANDALONE_CONTEXT_LENGTH` to override, in tokens, the context length `pool` uses to calculate automatic compaction thresholds
 
 ```bash
 POOLSIDE_STANDALONE_BASE_URL="http://127.0.0.1:8080" \
@@ -214,6 +220,8 @@ POOLSIDE_STANDALONE_MODEL="ggml-org/gemma-3-1b-it-GGUF" \
 POOLSIDE_STANDALONE_CONTEXT_LENGTH=200000 \
 pool
 ```
+
+Use a positive `POOLSIDE_STANDALONE_CONTEXT_LENGTH` value no greater than the model server's context window. The override does not change that window and applies only when the selected model appears in the provider's `/v1/models` response.
 
 ## MCP servers
 
