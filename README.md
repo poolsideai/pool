@@ -295,6 +295,8 @@ web_search:
   summarize_results: true   # summarize fetched pages with the session model
 ```
 
+**Hooks**: run your own shell commands at agent lifecycle events (`PreToolUse`, `PostToolUse`, `UserPromptSubmit`, `Stop`, `PreCompact`, `SessionStart`) to block or rewrite tool calls, inject context, or keep the agent working. Configured under `hooks:` in `settings.yaml` — see the [hooks documentation](https://docs.poolside.ai/cli/hooks).
+
 **Disabling a tool**:
 
 ```yaml
