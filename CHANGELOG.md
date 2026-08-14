@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.0.16] - 2026-08-14
+
+### ACP agent
+
+- Added hooks: run custom commands at six lifecycle seams (`PreToolUse`, `PostToolUse`, `UserPromptSubmit`, `PreCompact`, `SessionStart`, `Stop`), configured in the `hooks` section of `settings.yaml`. Hooks can block or rewrite tool calls and prompts, inject context, or ask the agent to keep going at the end of a turn.
+- Added Auto mode: an opt-in approval mode where a classifier model rates each permission request. Low-risk actions run immediately, medium-risk actions run with a notice in the transcript, and high-risk ones fall back to the approval dialog. Requires a classifier configured in `settings.yaml`.
+- Added mid-turn steering: new prompts can now be folded into a running turn instead of waiting for it to finish.
+- Added `settings.yaml` configuration for named subagents, including descriptions, default selection, and custom agent servers.
+- Subagents now reuse the running ACP server instead of spawning a separate process.
+- Sessions now continue after a length-truncated model response instead of terminating.
+- The plan to build mode switch is now always reviewed by the user, even under "Allow all".
+- Fixed a memory leak that caused agent memory to grow in long-running sessions.
+- Login with an HTTP API URL now automatically retries over HTTPS on network failure.
+
+### ACP client (TUI)
+
+- Pressing enter while the agent is busy now steers the prompt into the running turn. Use ctrl+enter to queue it for the next turn instead.
+- Added a startup dialog when a newer pool version is available.
+- New `/delete` command to select and delete previous sessions.
+- Subagent token and cost usage is now included in `/usage` and the usage tooltip.
+- Unified the UI for `--resume` and `/resume`.
+- Copied selections no longer contain soft line wraps.
+- Improved mouse support in dialogs and selectors.
+- Fixed lag and high CPU usage in long-running sessions.
+
 ## [1.0.15] - 2026-08-04
 
 ### ACP agent
