@@ -7,6 +7,8 @@ pool is [Poolside](https://poolside.ai)’s coding agent. It can run in several 
 - As an ACP client connected to [an ACP server](#run-as-an-acp-client-pool---agent-server)
 - Non-interactively with `pool exec`.
 
+Unless noted otherwise, this README describes the default agent that ships with `pool`. When you connect to another ACP server with `--agent-server`, available modes and agent-side features depend on that server.
+
 | Ghostty | Terminal.app |
 | --- | --- |
 | <img src="https://github.com/user-attachments/assets/7bff40ed-f347-4fcb-924f-85f4fd08ed82" /> | <img src="https://github.com/user-attachments/assets/2e91f838-501b-4449-b8d9-5779137cece0" /> |
@@ -17,6 +19,8 @@ pool is [Poolside](https://poolside.ai)’s coding agent. It can run in several 
 - [Quick start](#quick-start)
 - [Approval modes](#approval-modes)
 - [Agent modes](#agent-modes)
+- [Hooks](#hooks)
+- [Subagents](#subagents)
 - [Spec support](#spec-support)
 - [Run as an ACP server (`pool acp`)](#run-as-an-acp-server-pool-acp)
 - [Run as an ACP client (`pool --agent-server`)](#run-as-an-acp-client-pool---agent-server)
@@ -42,6 +46,8 @@ Windows (preview):
 irm https://downloads.poolside.ai/pool/install.ps1 | iex
 ```
 
+To update, exit any active session and run `pool update`. `pool` also prompts you at startup when a newer version is available.
+
 ## Quick start
 
 Run `pool` in any project:
@@ -59,26 +65,56 @@ Run `pool -h` to see all available options.
 - Fuzzy search over files and directories with `@`
 - Shell mode with `!`
 - Rewind to previous messages with double `esc`
+- Mid-turn steering when the connected agent server supports it
+- Session management with `/resume` and `/delete`, and `/rename` when the connected agent server supports it
 
 Enter `?` or `/help` during a session to see all available commands and shortcuts.
 
+Enter another prompt while the agent is working and press `Enter` to steer the running turn. Press `Ctrl+Enter` to queue the prompt for the next turn when your terminal supports key disambiguation. Shell input and slash commands wait until the current turn finishes. If another ACP server does not support steering, the prompt waits for the next turn.
+
 ## Approval modes
 
-By default, pool asks for approval before tool actions that are not already allowed. Switch to Accept edits or Allow all when you want it to take actions without prompting.
+`pool` asks for approval by default before tool actions that are not already allowed. Switch to Accept edits, Auto, or Allow all to change which actions require confirmation. Other ACP servers can provide different approval modes.
 
-| Approval mode | ID             | What it does                                  |
-| ------------- | -------------- | --------------------------------------------- |
-| Always ask    | `default`      | Prompts for tool actions that are not already allowed |
-| Accept edits  | `accept-edits` | Auto-approves workspace file reads and writes |
-| Allow all     | `always-allow` | Approves tool calls automatically             |
+| Approval mode | ID | What it does |
+|---|---|---|
+| Always ask | `default` | Prompts for tool actions that are not already allowed |
+| Accept edits | `accept-edits` | Auto-approves workspace file reads and writes |
+| Auto | `auto` | Classifies remaining permission requests by risk |
+| Allow all | `always-allow` | Approves tool calls automatically |
 
 Press `Shift+Tab` to cycle through approval modes, or use `/mode <approval-mode>` to switch directly.
+
+Auto mode uses Accept edits as a baseline. It runs low-risk actions immediately, runs medium-risk actions with a notice, and opens the approval dialog for high-risk actions. Configure a classifier model in your personal `~/.config/poolside/settings.yaml` file:
+
+```yaml
+pool:
+  auto_mode_classifier: <model-id>
+```
+
+To enable or override Auto mode for one invocation, set `POOL_AUTO_MODE_CLASSIFIER_MODEL` when you start `pool`. An explicitly empty value disables Auto mode for that invocation.
+
+See [Permissions](https://docs.poolside.ai/permissions) for classifier inputs, failure behavior, and safety constraints.
 
 ## Agent modes
 
 Build and Plan control how pool works without changing approval behavior. In Plan mode, pool can inspect your codebase and prepare a plan without modifying source files.
 
-After starting pool, use `/plan` or `/agent-mode plan` to enter Plan mode. Use `/agent-mode build` to return to Build mode. There is no Plan-mode startup flag.
+After starting pool, use `/plan` or `/agent-mode plan` to enter Plan mode. Use `/agent-mode build` to return to Build mode. There is no Plan-mode startup flag. Returning from Plan to Build always requires your review, including when the approval mode is Allow all.
+
+## Hooks
+
+Use hooks to run shell commands at six agent lifecycle events. Hooks can inspect or rewrite tool calls and prompts, block matching actions, inject context, and ask the agent to continue at the end of a turn.
+
+Configure hooks under the top-level `hooks` key in `settings.yaml`.
+
+Hooks run automatically without an approval prompt and fail open if they fail, time out, or return output `pool` cannot parse. They are not a security boundary. Use permissions and sandboxes for enforced controls. See [Hooks](https://docs.poolside.ai/hooks) for configuration, protocol details, examples, and security guidance.
+
+## Subagents
+
+The `general` subagent requires no configuration and lets the main agent delegate focused work with separate context. Ask the main agent to delegate a focused task to it. You can also configure named subagents that use custom instructions, another in-process Poolside agent, or a command-based ACP server.
+
+Subagents share the workspace, so parallel changes to the same files can conflict. Run `/usage` to see parent, per-subagent, and total usage. See [Subagents](https://docs.poolside.ai/subagents) for configuration, permissions, and usage accounting.
 
 ## Spec support
 
@@ -111,6 +147,7 @@ To pass flags to the ACP server, add them to the args array, for example `["acp"
 ### ACP features
 
 - Session persistence: `session/list` and `session/load`
+- Mid-turn steering via the `poolside/session_steer` capability
 - Session config options: approval mode, agent mode, model, and thought level when supported. These can be persisted in `settings.yaml`
   and are sent on startup using `session/set_config_option`
 - Slash commands advertised to the client
@@ -259,18 +296,24 @@ For automation environments without credentials saved by `pool login`, set `POOL
 
 ### settings.yaml reference
 
-All settings can be set globally (`~/.config/poolside/settings.yaml`) or
+Most settings can be set globally (`~/.config/poolside/settings.yaml`) or
 per-project (`.poolside/settings.yaml`, or gitignored
-`.poolside/settings.local.yaml`). The most specific file wins.
+`.poolside/settings.local.yaml`). Merge behavior varies by setting: more
+specific values usually override less specific ones, but some combine across
+files. See the
+[settings.yaml reference](https://docs.poolside.ai/settings-file-reference) for
+details. The `pool` keys below are an exception. `pool` reads them only from
+`~/.config/poolside/settings.yaml`.
 
 Besides [agent servers](#run-as-an-acp-client-pool---agent-server),
-[MCP servers](#mcp-servers), and [permissions](#permissions), `settings.yaml`
-supports:
+[MCP servers](#mcp-servers), [hooks](#hooks), [subagents](#subagents), and
+[permissions](#permissions), `settings.yaml` supports:
 
-**TUI defaults**:
+**CLI settings**:
 
 ```yaml
 pool:
+  auto_mode_classifier: <model-id>   # classifier used by Auto approval mode
   default_agent_server: my-acp-agent # agent used when --agent-server is omitted
   worktree_prefix: alice-            # prefix for auto-generated --worktree names
 ```
@@ -313,7 +356,7 @@ Permission rules can be set at three scopes:
 - `.poolside/settings.yaml` – shared per-project (checked in)
 - `~/.config/poolside/settings.yaml` – personal defaults across projects
 
-When the same setting appears in multiple files, the most specific file wins.
+Poolside combines tool and path `allow` and `deny` rules across all files. A matching `deny` overrides `allow`.
 
 ### Tool permissions
 
