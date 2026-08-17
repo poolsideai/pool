@@ -104,7 +104,7 @@ After starting pool, use `/plan` or `/agent-mode plan` to enter Plan mode. Use `
 
 ## Hooks
 
-Use hooks to run shell commands at six agent lifecycle events. Hooks can inspect or rewrite tool calls and prompts, block matching actions, inject context, and ask the agent to continue at the end of a turn.
+Use hooks to run shell commands at six agent lifecycle events: `PreToolUse`, `PostToolUse`, `UserPromptSubmit`, `Stop`, `PreCompact`, and `SessionStart`. Hooks can inspect or rewrite tool calls and prompts, block matching actions, inject context, and ask the agent to continue at the end of a turn.
 
 Configure hooks under the top-level `hooks` key in `settings.yaml`.
 
@@ -337,8 +337,6 @@ web_search:
   api_key: your-api-key
   summarize_results: true   # summarize fetched pages with the session model
 ```
-
-**Hooks**: run your own shell commands at agent lifecycle events (`PreToolUse`, `PostToolUse`, `UserPromptSubmit`, `Stop`, `PreCompact`, `SessionStart`) to block or rewrite tool calls, inject context, or keep the agent working. Configured under `hooks:` in `settings.yaml` — see the [hooks documentation](https://docs.poolside.ai/cli/hooks).
 
 **Disabling a tool**:
 
